@@ -27,20 +27,21 @@ def get_phase_status(
         else:
             print(f"Puzzle not initialized in database")
 
-current_phase = get_phase_status(puzzle="retina")
-
-
-
 try:
-    ser = serial.Serial('/dev/tty.usbserial-0130F9A1', 9600, timeout=1)
+    ser = serial.Serial('/dev/tty.usbserial-1430', 9600, timeout=None)
     ser.reset_input_buffer    
     
     while True:
         if ser.in_waiting > 0:
+            current_phase = get_phase_status(puzzle="retina")
+            if current_phase == 3:
+                ser.write(b"3")
             line = ser.readline().decode('utf-8').rstrip()
-            if line == current_phase:
+            if line[:5] == "Debug":
+                print(line)
+            elif line == current_phase:
                 print(f"Same Val")
-            elif line != current_phase:
+            elif line != current_phase and line[:1] != "D":
                 print(f"New Val of {line}")
                 with retina_puzzle.database.SessionManager() as db:
                     if db_puzzle := crud.get_db_puzzle_by_name(db=db, puzzle_name="retina"):
@@ -48,9 +49,9 @@ try:
                     else:
                         print(f"Couldn't update for some reason")
                 current_phase = line
+            
 
-            print(line)
-            print(f"Current Phase {current_phase}")
+            print(f"Serial: {line} -- Current Phase: {current_phase}")
 except:
     print(f"Puzzle Unplugged")
 

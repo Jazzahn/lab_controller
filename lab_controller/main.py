@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from . import models, schemas, crud
 from .database import SessionLocal, engine
 from .config import get_settings
+from .puzzlehelper import return_status_text
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
@@ -36,7 +37,9 @@ def get_phase_status(
     db: Session = Depends(get_db)
 ):
     if db_puzzle := crud.get_db_puzzle_by_name(db=db, puzzle_name=puzzle):
-        return db_puzzle.phase
+        phase = db_puzzle.phase
+        status_text = return_status_text(puzzle=puzzle, status=phase)
+        return status_text
     else:
         raise_not_found(request)
 
@@ -48,3 +51,13 @@ def create_puzzle(
 ):
     db_puzzle = crud.create_db_puzzle(db=db, puzzle=puzzle)
     return get_puzzle_info(db_puzzle)
+
+@app.get("/trigger/{puzzle}/{trigger}")
+def trigger_puzzle(
+    puzzle: str,
+    trigger: str,
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    puzzle_trigger = crud.trigger_db_puzzle(db=db, puzzle_name=puzzle, trigger_name=trigger)
+    return puzzle_trigger
