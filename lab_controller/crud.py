@@ -27,10 +27,11 @@ def get_db_puzzle_by_name(db: Session, puzzle_name: str) -> models.Puzzle:
         .first()
     )
 
+# Trigger a specific phase on named puzzle - TODO: Find a better way to do this
 def trigger_db_puzzle(db: Session, puzzle_name: str, trigger_name: str) -> models.Puzzle:
     db_puzzle = get_db_puzzle_by_name(db=db, puzzle_name=puzzle_name)
     if trigger_name == "reset":
-        db_puzzle.phase = 0
+        db_puzzle.phase = 6
         db.commit()
         db.refresh(db_puzzle)
         return db_puzzle
