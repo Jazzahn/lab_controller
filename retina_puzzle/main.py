@@ -53,7 +53,7 @@ try:
             if line[:5] == "Debug":
                 print(line)
                 logger.info(line)
-            elif line == current_phase:
+            elif int(line) == current_phase:
                 print(f"Same Val")
             elif int(line) != current_phase and line[:1] != "D":
                 print(f"New Val of {line}")
