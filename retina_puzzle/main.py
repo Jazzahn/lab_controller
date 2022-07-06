@@ -55,7 +55,7 @@ try:
                 logger.info(line)
             elif line == current_phase:
                 print(f"Same Val")
-            elif line != current_phase and line[:1] != "D":
+            elif int(line) != current_phase and line[:1] != "D":
                 print(f"New Val of {line}")
                 logger.info(f"New Value of {line}")
                 with retina_puzzle.database.SessionManager() as db:
