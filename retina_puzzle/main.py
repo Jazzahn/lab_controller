@@ -18,7 +18,7 @@ logger.setLevel(logging.INFO)
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-logHandler = handlers.RotatingFileHandler('retina.log', maxBytes=5000, backupCount=1)
+logHandler = handlers.RotatingFileHandler('retina.log', maxBytes=5000000, backupCount=1)
 logHandler.setLevel(logging.INFO)
 logHandler.setFormatter(formatter)
 
@@ -47,6 +47,8 @@ try:
     while True:
         if ser.in_waiting > 0:
             current_phase = get_phase_status(puzzle="retina")
+            if current_phase == 6:
+                ser.write(b"6")
             if current_phase == 3:
                 ser.write(b"3")
             line = ser.readline().decode('utf-8').rstrip()
