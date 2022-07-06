@@ -18,7 +18,7 @@ logger.setLevel(logging.INFO)
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-logHandler = handlers.RotatingFileHandler('retina.log', maxBytes=5000, backupCount=0)
+logHandler = handlers.RotatingFileHandler('retina.log', maxBytes=5000, backupCount=1)
 logHandler.setLevel(logging.INFO)
 logHandler.setFormatter(formatter)
 
