@@ -1,4 +1,4 @@
-# lab_controller/schemas.py
+# retina_puzzle/schemas.py
 
 from datetime import datetime
 from pydantic import BaseModel

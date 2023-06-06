@@ -1,4 +1,4 @@
-# lab_controller/models.py
+# retina_puzzle/models.py
 
 from tokenize import String
 from sqlalchemy import DateTime, Column, Integer, String
