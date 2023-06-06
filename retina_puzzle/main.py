@@ -41,7 +41,7 @@ def get_phase_status(
             print(f"Puzzle not initialized in database")
 
 try:
-    ser = serial.Serial('/dev/Retina', 9600, timeout=None)
+    ser = serial.Serial('/dev/Retina', 9600, timeout=10)
     ser.reset_input_buffer    
     
     while True:
