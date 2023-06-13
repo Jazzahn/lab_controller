@@ -50,9 +50,9 @@ try:
             # If the current phase is 99, send 99 to the Knob
             if current_phase == 99:
                 ser.write(b"99")
-            # If the current phase is 5, send 5 to the Knob
-            if current_phase == 5:
-                ser.write(b"5")
+            # If the current phase is 6, send 6 to the Knob
+            if current_phase == 6:
+                ser.write(b"6")
 
             # Get the line from the Knob
             line = ser.readline().decode('utf-8').rstrip()
