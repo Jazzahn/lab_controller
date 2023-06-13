@@ -47,8 +47,11 @@ def get_phase_status(
     request: Request, 
     db: Session = Depends(get_db)
 ):
+    # Get the puzzle from the database
     if db_puzzle := crud.get_db_puzzle_by_name(db=db, puzzle_name=puzzle):
+        # Get the puzzle's phase
         phase = db_puzzle.phase
+        # Get the status text from the puzzle name and phase
         status_text = return_status_text(puzzle=puzzle, status=phase)
         return status_text
     else:

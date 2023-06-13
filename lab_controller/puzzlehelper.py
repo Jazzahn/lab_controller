@@ -17,4 +17,21 @@ def return_status_text(puzzle, status):
             text = "latch open :: door open"
         elif status == 6:
             text = "Reset Signal Sent"
+    if puzzle == "knob":
+        if status == 0:
+            text = "Puzzle Offline"
+        elif status == 1:
+            text = "knobs left: 4"
+        elif status == 2:
+            text = "knobs left: 3"
+        elif status == 3:
+            text = "knobs left: 2"
+        elif status == 4:
+            text = "knobs left: 1"
+        elif status == 5:
+            text = "knobs left: 0"
+        elif status == 6:
+            text = "knob unlock signal sent"
+        elif status == 99:
+            text = "reset signal sent"
     return text
