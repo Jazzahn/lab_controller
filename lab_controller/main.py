@@ -5,10 +5,10 @@ from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from . import models, schemas, crud
-from .database import SessionLocal, engine
-from .config import get_settings
-from .puzzlehelper import return_status_text
+from utils import models, schemas, crud
+from utils.database import SessionLocal, engine
+from utils.config import get_settings
+from utils.puzzlehelper import return_status_text
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
@@ -30,8 +30,8 @@ def get_db():
     finally:
         db.close()
 
-def raise_not_found(request):
-    message = f"Puzzle '{request.puzzle}' doesn't exist"
+def raise_not_found(puzzle: str):
+    message = f"Puzzle '{puzzle}' doesn't exist"
     raise HTTPException(status_code=404, detail=message)
 
 def get_puzzle_info(db_puzzle: models.Puzzle) -> schemas.Puzzle:
@@ -55,7 +55,7 @@ def get_phase_status(
         status_text = return_status_text(puzzle=puzzle, status=phase)
         return status_text
     else:
-        raise_not_found(request)
+        raise_not_found(puzzle)
 
 @app.get("/create/{puzzle}", response_model=schemas.Puzzle)
 def create_puzzle(

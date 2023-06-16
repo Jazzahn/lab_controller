@@ -4,9 +4,9 @@ import serial
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
-from . import models, schemas, crud
-from .database import SessionLocal, engine
-import knob_puzzle.database
+from utils import models, schemas, crud
+from utils.database import SessionLocal, engine, SessionManager
+# import utils.retina_puzzle.database
 import logging
 import logging.handlers as handlers
 
@@ -34,7 +34,7 @@ def get_db():
 def get_phase_status(
     puzzle: str,
 ):
-    with knob_puzzle.database.SessionManager() as db:
+    with SessionManager() as db:
         if db_puzzle := crud.get_db_puzzle_by_name(db=db, puzzle_name=puzzle):
             return db_puzzle.phase
         else:

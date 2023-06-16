@@ -22,6 +22,12 @@ TODO
 
 Main controller software that runs a FastAPI webserver.
 
+To run the FastAPI server
+
+```
+univorn main:app 
+```
+
 TODO
 - come up with a cleaner way to handle puzzle result respone text - puzzlehelper.py
 - come up with a cleaner way to resolve incoming trigger requests - crud.py
